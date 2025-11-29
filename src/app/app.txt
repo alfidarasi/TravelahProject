@@ -1,0 +1,6 @@
+Folder app ini untuk menjalankan aplikasi Travelah
+
+Travelah.java berisi:
+• menu utama (search flight, search hotel, book, cancel)
+• loop aplikasi
+• panggil manager

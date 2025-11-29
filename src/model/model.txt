@@ -1,0 +1,1 @@
+Folder model berisi data class yang digunakan untuk menampung Dummy data di dalam folder /data, yang kemudian akan diolah di folder /manager
