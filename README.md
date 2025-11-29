@@ -61,7 +61,7 @@ Cara Menjalankan Program:
           javac src/**/*.java
           java app.Travelah
         - Jika pakai VS Code:
-        - Tekan tombol ▶️ “Run Java”
+        - Tekan tombol > “Run Java”
         - Program akan berjalan di terminal VS Code
 
       
