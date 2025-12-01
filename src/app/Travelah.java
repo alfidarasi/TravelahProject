@@ -48,6 +48,7 @@ public class Travelah {
 
         if (results.isEmpty()) {
             System.out.println("Tidak ada penerbangan yang tersedia.");
+            pressEnter();
             return;
         }
 
@@ -56,12 +57,13 @@ public class Travelah {
             System.out.println((i + 1) + ". " + results.get(i));
         }
 
-        System.out.print("Pilih nomor: (0 untuk batal): ");
+        System.out.print("Pilih nomor (0 untuk batal): ");
         int ch = safeInt();
 
         if (ch == 0) return;
         if (ch < 1 || ch > results.size()) {
             System.out.println("Pilihan tidak valid.");
+            pressEnter();
             return;
         }
 
@@ -74,6 +76,8 @@ public class Travelah {
         int seats = safeInt();
 
         rm.bookFlight(f, name, seats);
+
+        pressEnter();
     }
 
     // ======================================================
@@ -82,13 +86,17 @@ public class Travelah {
     public static void searchHotel() {
 
         System.out.println("\n=== CARI HOTEL ===");
+
         System.out.print("Lokasi: ");
         String location = sc.nextLine();
-        System.out.print("Tanggal check-in (YYYY-MM-DD) : ");
+
+        System.out.print("Tanggal check-in (YYYY-MM-DD): ");
         String checkIn = sc.nextLine();
+
         System.out.print("Tanggal check-out (YYYY-MM-DD): ");
         String checkOut = sc.nextLine();
-        System.out.print("Jumlah tamu                    : ");
+
+        System.out.print("Jumlah tamu: ");
         int guests = safeInt();
 
         ArrayList<HotelItem> results = DataStore.getHotels().stream()
@@ -96,11 +104,11 @@ public class Travelah {
                 .filter(h -> h.getCheckInDate().equals(checkIn))
                 .filter(h -> h.getCheckOutDate().equals(checkOut))
                 .filter(h -> h.getMaxGuests() >= guests)
-
                 .collect(Collectors.toCollection(ArrayList::new));
 
         if (results.isEmpty()) {
             System.out.println("Tidak ada hotel yang tersedia.");
+            pressEnter();
             return;
         }
 
@@ -109,12 +117,13 @@ public class Travelah {
             System.out.println((i + 1) + ". " + results.get(i));
         }
 
-        System.out.print("Pilih nomor hotel: (0 untuk batal)");
+        System.out.print("Pilih nomor hotel (0 untuk batal): ");
         int ch = safeInt();
 
         if (ch == 0) return;
         if (ch < 1 || ch > results.size()) {
             System.out.println("Pilihan tidak valid.");
+            pressEnter();
             return;
         }
 
@@ -127,6 +136,8 @@ public class Travelah {
         int g = safeInt();
 
         rm.bookHotel(h, name, g);
+
+        pressEnter();
     }
 
     // ======================================================
@@ -138,6 +149,8 @@ public class Travelah {
 
         double conf = safeDouble();
         rm.cancel(conf);
+
+        pressEnter();
     }
 
     // ======================================================
@@ -145,15 +158,16 @@ public class Travelah {
     // ======================================================
     public static void showReservations() {
         ReservationManager.viewReservations();
+        pressEnter();
     }
 
-        // ======================================================
-    // EXIT APP 
+    // ======================================================
+    // EXIT APP
     // ======================================================
     private static void exit() {
         System.out.println("Terima kasih sudah memakai Travelah!");
-        sc.close();          // tutup scanner
-        System.exit(0);      // keluar program
+        sc.close();
+        System.exit(0);
     }
 
     // ======================================================
@@ -176,25 +190,14 @@ public class Travelah {
             int ch = safeInt();
 
             switch (ch) {
-            case 1:
-                searchFlight();
-                break;
-
-            case 2:
-                searchHotel();
-                break;
-
-            case 3:
-                showReservations();
-                break;
-
-            case 4:
-                cancelReservation();
-                break;
-
-            case 0:
-                exit();
-                break;
+                case 1: searchFlight(); break;
+                case 2: searchHotel(); break;
+                case 3: showReservations(); break;
+                case 4: cancelReservation(); break;
+                case 0: exit(); break;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+                    pressEnter();
             }
         }
     }
@@ -204,15 +207,29 @@ public class Travelah {
     // ======================================================
     private static int safeInt() {
         while (true) {
-            try { return Integer.parseInt(sc.nextLine()); }
-            catch (Exception e) { System.out.print("Masukkan angka: "); }
+            try {
+                return Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.print("Masukkan angka: ");
+            }
         }
     }
 
     private static double safeDouble() {
         while (true) {
-            try { return Double.parseDouble(sc.nextLine()); }
-            catch (Exception e) { System.out.print("Masukkan angka: "); }
+            try {
+                return Double.parseDouble(sc.nextLine());
+            } catch (Exception e) {
+                System.out.print("Masukkan angka: ");
+            }
         }
+    }
+
+    // ======================================================
+    // PRESS ENTER TO CONTINUE
+    // ======================================================
+    private static void pressEnter() {
+        System.out.print("\nTekan ENTER untuk kembali ke menu...");
+        sc.nextLine();
     }
 }
